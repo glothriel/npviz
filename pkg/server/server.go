@@ -17,11 +17,11 @@ type NpvizServer struct {
 	router  *mux.Router
 }
 
-func (bs *NpvizServer) redirectToForm(w http.ResponseWriter, r *http.Request) {
+func (bs *NpvizServer) redirectToGraph(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/ui/index.html", 301)
 }
 
-func (bs *NpvizServer) formBackendHandler(w http.ResponseWriter, r *http.Request) {
+func (bs *NpvizServer) resourcesHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "GET" {
 		loadedJSON, loadJSONErr := bs.backend.Extract()
 		if loadJSONErr != nil {
@@ -58,8 +58,8 @@ func NewServer(
 		backend: extractor,
 		router:  mux.NewRouter(),
 	}
-	theServer.router.HandleFunc("/", theServer.redirectToForm)
-	theServer.router.HandleFunc("/resources", theServer.formBackendHandler)
+	theServer.router.HandleFunc("/", theServer.redirectToGraph)
+	theServer.router.HandleFunc("/resources", theServer.resourcesHandler)
 	theServer.router.PathPrefix("/ui/").Handler(
 		Cachebuster(http.StripPrefix("/ui/", http.FileServer(packr.NewBox("./templates")))),
 	)

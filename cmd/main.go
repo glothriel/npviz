@@ -8,8 +8,7 @@ import (
 
 func main() {
 	logrus.SetLevel(logrus.InfoLevel)
-	extractor := extractor.NewFilesystemResourceExtractor("/home/kosto/Projects/promil/Promil-infra-staging/kubernetes")
-	// extractor := extractor.NewClusterResourceExtractor()
+	extractor := extractor.NewClusterResourceExtractor()
 	server, err := server.NewServer(extractor)
 	if err != nil {
 		logrus.Fatal(err)
