@@ -35,11 +35,7 @@ Connection details
 
 ### Usage
 
-Clone this repository and invoke:
-
-```
-go run cmd/main.go
-```
+Download latest release and run the process without any parameters `./npviz`. You can also just run in from code if you prefer, read more in Development section below.
 
 Then go to `http://localhost:1337` and wait for several seconds until npviz obtains resources from your cluster. If some errors happens, search them in CLI stdout/err and web console via browser inspector.
 
@@ -47,4 +43,10 @@ Maybe at some point I'll publish binaries in releases section.
 
 ### Development
 
-Well, just submit a PR if you feel so. It's a single weekend project and it's quite POCy in its nature. Maybe in time I'll post some more specific guides.
+Clone this repository and invoke:
+
+```
+go run cmd/main.go
+```
+
+As to contributions, just submit a PR if you feel so. It's a single weekend project and it's quite POCy in its nature. Maybe in time I'll post some more specific guides.
