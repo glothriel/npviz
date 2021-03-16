@@ -35,18 +35,19 @@ Connection details
 
 ### Usage
 
-Download latest release and run the process without any parameters `./npviz`. You can also just run in from code if you prefer, read more in Development section below.
+Download latest release and run the process `./npviz --server`. You can also just run in from code if you prefer, read more in Development section below.
 
 Then go to `http://localhost:1337` and wait for several seconds until npviz obtains resources from your cluster. If some errors happens, search them in CLI stdout/err and web console via browser inspector.
 
-Maybe at some point I'll publish binaries in releases section.
+If you'd like to load yaml resources from your local directory instead of downloading them from live cluster (if they were for example previously generated using helm template command), you can do so using `--from-directory` flag.
+
 
 ### Development
 
 Clone this repository and invoke:
 
 ```
-go run cmd/main.go
+go run cmd/main.go server
 ```
 
 As to contributions, just submit a PR if you feel so. It's a single weekend project and it's quite POCy in its nature. Maybe in time I'll post some more specific guides.

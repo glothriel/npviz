@@ -525,4 +525,7 @@ function linkArc(d) {
     A${r},${r} 0 0,1 ${d.target.x},${d.target.y}
   `;
 }
-$.get('/resources', function (resources) { chart(resources) })
+$.get('/resources', function (resources) { 
+    $("#spinner").css("display", "none");
+    chart(resources);
+ })
