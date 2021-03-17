@@ -35,7 +35,7 @@ Connection details
 
 ### Usage
 
-Download latest release and run the process `./npviz --server`. You can also just run in from code if you prefer, read more in Development section below.
+Download latest release and run the process `./npviz server`. You can also just run in from code if you prefer, read more in Development section below.
 
 Then go to `http://localhost:1337` and wait for several seconds until npviz obtains resources from your cluster. If some errors happens, search them in CLI stdout/err and web console via browser inspector.
 
