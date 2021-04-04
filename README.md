@@ -1,12 +1,13 @@
 # npviz aka NetworkPolicy visualizer
 
 
-Npviz is a simple utility, that connects to your kubernetes cluster using currently active kubectl context and allows viewing connections between pods using NetworkPolicy resources as source of truth.
+Npviz is a simple utility, that allows viewing all allowed connections between pods using either active kubectl context or static directory with YAML resources as a source of data. It parses all available workloads and namespaces labels and their NetworkPolicy definitions in order to get this data.
 
 Features:
 
 * Show resource connection graph with drag & zoom, thanks to d3js demo + some random people on stack overflow
 * Show connection details after clicking on the link
+* Show workload details after clicking on workload label or node
 * Highlight workloads with no network policies attached using red font
 
 Known bugs:

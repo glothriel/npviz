@@ -30,6 +30,30 @@ AccordionBuilder.prototype.render = function(id, title, content){
     return html
 }
 
+function ListBuilder(name){
+    this.name = name
+    this.elements = []
+}
+
+
+ListBuilder.prototype.add = function(id){
+    this.elements.push({
+        "id": id
+    })
+}
+
+
+ListBuilder.prototype.render = function(){
+    var html = `<div class="list-group" id="${this.name}">`
+    _.each(this.elements, function(element){
+        html += `<a href="#" class="list-group-item list-group-item-action">${element.id}</a>`
+    })
+    html += `</div>`
+    return html
+}
+
+
+
 function drawLinksModal(d){
     $("#modal .modal-title").html(
         d.sourceWorkloadMatch.workload.id() + " -> " + d.targetWorkloadMatch.workload.id()
@@ -72,4 +96,56 @@ function drawLinksModal(d){
     )
     var myModal = new bootstrap.Modal(document.getElementById('modal'))
     myModal.show()
+}
+
+function NodeSearcher(rawNodes, drawnNodes){
+    this.rawNodes = rawNodes
+    this.drawnNodes = drawnNodes
+}
+
+NodeSearcher.prototype.getById = function(theId){
+    lastId = null
+    _.find(this.drawnNodes, function(elem, idx){ lastId = idx; return elem.index == theId });
+    return this.rawNodes[lastId]
+}
+
+function drawNodeModalClosure(rawNodes, nodes, allLinks){
+    searcher = new NodeSearcher(rawNodes, nodes)
+    return function drawNodeModal(event, nodeId){
+
+        incoming = _.map(_.filter(allLinks, function(link){
+            return link.target.index == nodeId
+        }), function(item){ return searcher.getById(item.source.index)})
+        outgoing = _.map(_.filter(allLinks, function(link){
+            return link.source.index == nodeId
+        }), function(item){ return searcher.getById(item.target.index)})
+
+        var sourceList = new ListBuilder("source")
+        _.each(incoming, function(item){sourceList.add(item.id)})
+        var targetList = new ListBuilder("target")
+        _.each(outgoing, function(item){targetList.add(item.id)})
+
+        $("#modal .modal-title").html(
+            searcher.getById(nodeId).id
+        )
+        console.log(searcher.getById(nodeId).id)
+        console.log($("#modal .modal-title"))
+
+        $("#modal .modal-body").html(
+            `<div class="row justify-content-start">
+        <div class="col-sm-6">
+            <h4>Incoming connections</h4>
+            <hr/>
+            ${sourceList.render()}
+        </div>
+        <div class="col-sm-6">
+            <h4>Outgoing connections</h4>
+            <hr/>
+            ${targetList.render()}
+        </div>`
+        )
+        var myModal = new bootstrap.Modal(document.getElementById('modal'))
+        myModal.show()
+
+    }
 }
